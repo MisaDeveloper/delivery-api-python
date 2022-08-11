@@ -1,5 +1,6 @@
 from flask import request, Response
 from models.Orders.Orders import createOrder
+import json
 
 async def CreateController():
     data = request.json
@@ -8,9 +9,9 @@ async def CreateController():
         
         try:
             await createOrder(data['cliente'], data['produto'], data['valor'])
-            return Response("{ 'type': 'success', 'message': 'Pedido criado com sucesso!' }", status=201)
+            return Response(json.dumps({ 'type': 'success', 'message': 'Pedido criado com sucesso!' }, ensure_ascii=False, indent=4), status=201)
         
         except:
-            return Response("{ 'type': 'error', 'message': 'Erro ao criar pedido!' }", status=500)
+            return Response(json.dumps({ 'type': 'error', 'message': 'Erro ao criar pedido!' }, ensure_ascii=False, indent=4), status=500)
     else:
-        return Response("{ 'type': 'error', 'message': 'Formulário de criação incompleto!' }", status=400)
+        return Response(json.dumps({ 'type': 'error', 'message': 'Formulário de criação incompleto!' }, ensure_ascii=False, indent=4), status=400)

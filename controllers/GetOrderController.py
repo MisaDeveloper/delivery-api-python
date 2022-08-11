@@ -1,5 +1,6 @@
 from flask import request, Response
 from models.Orders.Orders import getOrdersById
+import json
 
 async def GetOrderController(orderId):
 
@@ -9,6 +10,6 @@ async def GetOrderController(orderId):
         if data:
             return data
         else:
-            return Response("{ 'type': 'error', 'message': 'Id do pedido não encontrado!' }", status=404)
+            return Response(json.dumps({ 'type': 'error', 'message': 'Id do pedido não encontrado!' }, ensure_ascii=False, indent=4), status=404)
     except:
-        return Response("{ 'type': 'error', 'message': 'Erro ao consultar pedido!' }", status=500)
+        return Response(json.dumps({ 'type': 'error', 'message': 'Erro ao consultar pedido!' }, ensure_ascii=False, indent=4), status=500)
